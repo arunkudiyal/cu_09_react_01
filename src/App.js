@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import Button from './Button'
 
-function App() {
+const App = () => {
+  // JavaSCript
+  const onClickHandler = (e) => {
+    console.log(e)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <h1>Welcome to React!</h1> <hr />
+      <Button contextual="primary" text="Button - 1" />
+      <Button contextual="danger"  />
+      <Button click={(e) => onClickHandler(e)} contextual="success" text="Button - 3" />
+      <Button contextual="info" text="Button - 4" />
+      <Button contextual="warning"  />
     </div>
   );
 }
