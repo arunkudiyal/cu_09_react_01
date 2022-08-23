@@ -4,3 +4,8 @@
     padding: 10px;
     margin: 15px
 }
+
+.my-div {
+    display: flex;
+    justify-content: space-between;
+}

@@ -5,10 +5,11 @@ class App extends Component {
   // JavaScript
   state = {
     persons: [
-      {name: 'Person - 1', age: 22}, 
-      {name: 'Person - 2', age: 23}, 
-      {name: 'Person - 3', age: 24},
-      {name: 'Person - 4', age: 25},
+      {id:'1001', name: 'Person - 1', age: 22}, 
+      {id:'1002', name: 'Person - 2', age: 23}, 
+      {id:'1003', name: 'Person - 3', age: 24},
+      {id:'1004', name: 'Person - 4', age: 25},
+      {id:'1005', name: 'Person - 5', age: 29}
     ],
     showPersons: false
   }
@@ -47,6 +48,12 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = () => {
+    let personsCopy = [...this.state.persons];
+    personsCopy.splice(2, 1)
+    this.setState({persons: personsCopy})
+  }
+
   render() {
     // JavaScript
     let persons = ( <h3>Click on Toggle Persons!</h3> )
@@ -54,26 +61,17 @@ class App extends Component {
     if(this.state.showPersons) {
       persons = (
         <div className='container'>
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age} />
-
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}
-            changed={(e) => this.onSetName(e)} />
-
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age} />
-
-          <Person 
-            name={this.state.persons[3].name} 
-            age={this.state.persons[3].age} />
-
+          { 
+            this.state.persons.map( (person, index) => 
+              <Person 
+                key={person.id}
+                name={person.name} 
+                age={person.age} /> ) 
+          }
           <hr />
-
           <button onClick={this.onChangeNameHandler} className='btn btn-danger'>Change State</button>
+
+          <button onClick={this.deletePersonHandler} className='btn btn-warning'>Delete Person</button>
         </div>
       )
     }    
@@ -82,7 +80,7 @@ class App extends Component {
       // JSX
       <div>
         <div className="container-fluid">
-          <h1>Person Management App</h1>
+          <h1 style={{ color: 'red', fontSize: '2.2em' }}>Person Management App</h1>
           <button onClick={this.onShowPersons} className='btn btn-success'>Toggle Persons</button>
           <hr />
         </div>
