@@ -2,16 +2,33 @@ import { Component } from 'react'
 import Person from './Person/Person';
 
 class App extends Component {
-  // JavaScript
-  state = {
-    persons: [
-      {id:'1001', name: 'Person - 1', age: 22}, 
-      {id:'1002', name: 'Person - 2', age: 23}, 
-      {id:'1003', name: 'Person - 3', age: 24},
-      {id:'1004', name: 'Person - 4', age: 25},
-      {id:'1005', name: 'Person - 5', age: 29}
-    ],
-    showPersons: false
+  constructor(props) {
+    console.log(`[App.js] constructor`)
+    super(props)
+    // Define & Declatre you state
+    this.state = {
+      persons: [
+        {id:'1001', name: 'Person - 1', age: 22}, 
+        {id:'1002', name: 'Person - 2', age: 23}, 
+        {id:'1003', name: 'Person - 3', age: 24},
+        {id:'1004', name: 'Person - 4', age: 25},
+        {id:'1005', name: 'Person - 5', age: 29}
+      ],
+      showPersons: false
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(`[App.js] getDerivedStateFromProps`)
+    console.log(props)
+    console.log(state)
+
+    return state
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount')
+    // AJAX Call
   }
 
   onChangeNameHandler = () => {
@@ -48,13 +65,16 @@ class App extends Component {
     })
   }
 
-  deletePersonHandler = () => {
+  deletePersonHandler = (index) => {
     let personsCopy = [...this.state.persons];
-    personsCopy.splice(2, 1)
+    // If ID is passed
+    // personsCopy.filter(person => person.id !== id)
+    personsCopy.splice(index, 1)
     this.setState({persons: personsCopy})
   }
 
   render() {
+    console.log(`[App.js] render`)
     // JavaScript
     let persons = ( <h3>Click on Toggle Persons!</h3> )
 
@@ -66,7 +86,8 @@ class App extends Component {
               <Person 
                 key={person.id}
                 name={person.name} 
-                age={person.age} /> ) 
+                age={person.age}
+                deleted={() => this.deletePersonHandler(index)} /> ) 
           }
           <hr />
           <button onClick={this.onChangeNameHandler} className='btn btn-danger'>Change State</button>
@@ -80,11 +101,13 @@ class App extends Component {
       // JSX
       <div>
         <div className="container-fluid">
-          <h1 style={{ color: 'red', fontSize: '2.2em' }}>Person Management App</h1>
+          <h1 style={{ color: 'red', fontSize: '2.2em' }}> {this.props.appTitle} </h1>
           <button onClick={this.onShowPersons} className='btn btn-success'>Toggle Persons</button>
           <hr />
         </div>
-        { persons }
+        <div className='container'>
+          { persons }
+        </div>
       </div>
     )
   }
