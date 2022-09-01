@@ -2,7 +2,33 @@ import { Component } from 'react'
 import './Person.css'
 
 class Person extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log(`[Person.js] getDerivedStateFromProps`)
+        return state
+    }
+
+    shouldComponentUpdate(newProps, newState) {
+        console.log(`[Person.js] shouldComponentUpdate`)
+        if(this.props === newProps || this.state === newState) {
+            return false
+        } else {
+            return false
+        }        
+    }
+
+
+    componentDidUpdate() {
+        console.log(`[Person.js] componentDidUpdate`)
+    }
+
     render() {
+        console.log(`[Person.js] rendering...`)
+
         const paraStyles = {
             color: 'gray'
         }

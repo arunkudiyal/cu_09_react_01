@@ -14,7 +14,8 @@ class App extends Component {
         {id:'1004', name: 'Person - 4', age: 25},
         {id:'1005', name: 'Person - 5', age: 29}
       ],
-      showPersons: false
+      showPersons: false,
+      otherState: 'This is an another State Value'
     }
   }
 
@@ -24,6 +25,19 @@ class App extends Component {
     console.log(state)
 
     return state
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    console.log(`[App.js] shouldComponentUpdate`)
+    if(this.state.persons === newState.person || this.state.showPersons === newProps.showPersons) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  componentDidUpdate() {
+    console.log(`[Person.js] componentDidUpdate`)
   }
 
   componentDidMount() {
@@ -70,7 +84,7 @@ class App extends Component {
     // If ID is passed
     // personsCopy.filter(person => person.id !== id)
     personsCopy.splice(index, 1)
-    this.setState({persons: personsCopy})
+    this.setState( {persons: personsCopy} )
   }
 
   render() {
@@ -91,8 +105,6 @@ class App extends Component {
           }
           <hr />
           <button onClick={this.onChangeNameHandler} className='btn btn-danger'>Change State</button>
-
-          <button onClick={this.deletePersonHandler} className='btn btn-warning'>Delete Person</button>
         </div>
       )
     }    
