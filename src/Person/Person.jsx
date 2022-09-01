@@ -4,7 +4,9 @@ import './Person.css'
 class Person extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            personState: 'This is a Person State'
+        }
     }
 
     static getDerivedStateFromProps(props, state) {
